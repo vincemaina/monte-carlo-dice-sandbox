@@ -179,7 +179,7 @@ export function MonteCarlo() {
         </label>
 
         <label title="How many times would you like to run the simulation?">
-          <span>Number of iterations</span>
+          <span>Number of trials</span>
           <input
             type="number"
             name="input-num-iterations"
@@ -192,7 +192,7 @@ export function MonteCarlo() {
         </label>
 
         <label title="How many times should the simulation run per second?">
-          <span>Simulations / second</span>
+          <span>Max trials / second</span>
           <input
             type="number"
             name="input-simulation-rate"

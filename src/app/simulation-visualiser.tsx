@@ -45,7 +45,7 @@ export function SimulationVisualiser({ outcomes, numIterations }: Props) {
 
       <div className="flex-shrink-1">
         <div>Expected value: {expectedValue.toFixed(2)}</div>
-        <div>Number of simulations: {outcomes.length}</div>
+        <div>Trials complete: {outcomes.length}</div>
         <div
           className="bg-lime-500 w-full h-4 rounded mt-3"
           style={{ maxWidth: `${(outcomes.length / numIterations) * 100}%` }}
