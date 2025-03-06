@@ -157,12 +157,12 @@ export function MonteCarlo() {
   }
 
   return (
-    <div className="flex flex-grow gap-5">
+    <div className="flex flex-col lg:flex-row flex-grow gap-5">
 
       {/* Config form */}
       <form
         onSubmit={handleFormSubmit}
-        className="border border-dashed bg-white p-7 rounded max-w-[300px] flex flex-col gap-5"
+        className="border border-dashed bg-white p-7 rounded flex lg:flex-col  items-center lg:items-start gap-5"
       >
         <label>
           <span>Number of die</span>
@@ -205,15 +205,17 @@ export function MonteCarlo() {
           />
         </label>
 
-        {running
-          ? <div className="mt-auto !bg-rose-800 button" onClick={stopSimulation}>
-            Stop Simulation
-          </div>
+        <div className="ml-auto lg:ml-0 lg:mt-auto">
+          {running
+            ? <div className="!bg-rose-800 button" onClick={stopSimulation}>
+              Stop Simulation
+            </div>
 
-          : <button id="run-button" type="submit" className="mt-auto">
-            Start Simulation
-          </button>
-        }
+            : <button id="run-button" type="submit">
+              Start Simulation
+            </button>
+          }
+        </div>
       </form>
 
       {/* Visualiser */}

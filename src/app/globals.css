@@ -11,7 +11,7 @@ body {
 }
 
 label {
-  @apply flex flex-col;
+  @apply flex flex-col w-full;
 }
 
 label > span {
@@ -19,7 +19,7 @@ label > span {
 }
 
 input {
-  @apply border border-dashed bg-white rounded px-1 py-0.5;
+  @apply border border-dashed bg-white rounded px-1 py-0.5 w-full;
 }
 
 button, .button {
