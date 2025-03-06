@@ -221,8 +221,9 @@ export function MonteCarlo() {
       {/* Visualiser */}
       <div className="flex-grow border border-dashed bg-white rounded-xl p-7 flex flex-col">
         {
-          config &&
-          <SimulationVisualiser outcomes={displayedOutcomes} numIterations={config.numIterations} />
+          config
+            ? <SimulationVisualiser outcomes={displayedOutcomes} numIterations={config.numIterations} />
+            : <div className="m-auto">Click <strong>Start Simulation</strong> in the left pane</div>
         }
 
       </div>
