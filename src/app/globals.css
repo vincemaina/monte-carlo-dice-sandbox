@@ -23,5 +23,5 @@ input {
 }
 
 button, .button {
-  @apply bg-black text-white rounded p-2 cursor-pointer text-center;
+  @apply bg-black text-white rounded p-2 px-3 cursor-pointer text-center;
 }
