@@ -217,7 +217,7 @@ export function MonteCarlo() {
       </form>
 
       {/* Visualiser */}
-      <div className="flex-grow border border-dashed rounded p-7 flex flex-col">
+      <div className="flex-grow border border-dashed bg-white rounded p-7 flex flex-col">
         {
           config &&
           <SimulationVisualiser outcomes={displayedOutcomes} numIterations={config.numIterations} />
