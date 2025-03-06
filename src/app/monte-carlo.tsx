@@ -220,7 +220,7 @@ export function MonteCarlo() {
       <div className="flex-grow border border-dashed rounded p-7 flex flex-col">
         {
           config &&
-          <SimulationVisualiser outcomes={displayedOutcomes} />
+          <SimulationVisualiser outcomes={displayedOutcomes} numIterations={config.numIterations} />
         }
 
       </div>
