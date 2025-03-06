@@ -23,8 +23,8 @@ export function MonteCarlo() {
   const [running, setRunning] = useState<boolean>(false);  // Disables form while running
 
   // For clearing intervals / stopping simulation
-  const timeout = useRef<NodeJS.Timeout>(null);
-  const timeout2 = useRef<NodeJS.Timeout>(null);
+  const timeout = useRef<NodeJS.Timeout>(undefined);
+  const timeout2 = useRef<NodeJS.Timeout>(undefined);
 
   // Outcomes
   const outcomes = useRef<Outcome[]>([]);
@@ -68,13 +68,13 @@ export function MonteCarlo() {
 
     // Runs Monte Carlo simulation.
     timeout2.current = setInterval(() => {
+      runTrial(config.numDie);
+
       // Check if all iterations complete
-      if (outcomes.current.length >= config.numIterations - 1) {
+      if (outcomes.current.length >= config.numIterations) {
         console.log("Completed simulation!");
         stopSimulation();
       }
-      // Otherwise, run trial
-      runTrial(config.numDie);
     }, config.simulationDelay);
 
     // Refreshes display 10 times per second (1000ms in a second / 100ms delay)
@@ -86,14 +86,25 @@ export function MonteCarlo() {
     }, REFRESH_DELAY);
 
     console.log("Started simulation!");
+    console.log(config);
   }
 
   /**
    * Clears all loops, stopping the simulation.
    */
   function stopSimulation() {
-    clearInterval(timeout.current!);
-    clearInterval(timeout2.current!);
+    if (timeout.current) {
+      clearInterval(timeout.current);
+      timeout.current = undefined;
+    }
+
+    if (timeout2.current) {
+      clearInterval(timeout2.current);
+      timeout2.current = undefined;
+    }
+
+    // Update displayed outcomes one final time to show complete results
+    setDisplayedOutcomes([...outcomes.current]);
     setRunning(false);
     console.log("Stopped simulation!");
   }
@@ -104,16 +115,20 @@ export function MonteCarlo() {
    * Ensures simulation is stopped when component unmounted.
    */
   useEffect(() => {
-    if (!config || running) {
-      return;
+    if (config && !running) {
+      console.log("Here", { config, running });
+      startSimulation();
     }
+  }, [config]);
 
-    startSimulation();
-
+  /**
+   * Stop simulation when component unmounted.
+   */
+  useEffect(() => {
     return () => {
       stopSimulation();
     };
-  }, [config]);
+  }, []);
 
   /**
    * Handles form submission events.
@@ -121,6 +136,8 @@ export function MonteCarlo() {
    */
   function handleFormSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    console.log("Parsing form!");
 
     // Parse input fields
     const formData = new FormData(e.currentTarget);
@@ -183,7 +200,15 @@ export function MonteCarlo() {
           />
         </label>
 
-        <button type="submit" className="mt-auto">Run Simulation</button>
+        {running
+          ? <div className="mt-auto !bg-rose-800 button" onClick={stopSimulation}>
+            Stop Simulation
+          </div>
+
+          : <button id="run-button" type="submit" className="mt-auto">
+            Start Simulation
+          </button>
+        }
       </form>
 
       {/* Visualiser */}
