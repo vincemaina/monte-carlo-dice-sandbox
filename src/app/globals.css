@@ -24,3 +24,19 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+label {
+  @apply flex flex-col;
+}
+
+label > span {
+  @apply font-medium;
+}
+
+input {
+  @apply border border-dashed bg-white rounded px-1 py-0.5;
+}
+
+button {
+  @apply bg-black text-white rounded p-2;
+}
