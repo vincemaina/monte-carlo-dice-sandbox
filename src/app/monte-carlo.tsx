@@ -165,7 +165,7 @@ export function MonteCarlo() {
         className="border border-dashed bg-white p-7 rounded-xl flex lg:flex-col  items-center lg:items-start gap-5"
       >
         <label>
-          <span>Number of die</span>
+          <span>Number of dice</span>
           <input
             type="number"
             name="input-num-die"
