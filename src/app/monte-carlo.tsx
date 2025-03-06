@@ -14,21 +14,35 @@ export type Config = {
   simulationDelay: number,
 }
 
+/**
+ * Logic for running a Monte Carlo simulation.
+ */
 export function MonteCarlo() {
 
-  const [config, setConfig] = useState<Config>();
+  const [config, setConfig] = useState<Config>();  // E.g. num dice, num iterations...
+  const [running, setRunning] = useState<boolean>(false);  // Disables form while running
 
+  // For clearing intervals / stopping simulation
   const timeout = useRef<NodeJS.Timeout>(null);
   const timeout2 = useRef<NodeJS.Timeout>(null);
 
+  // Outcomes
   const outcomes = useRef<Outcome[]>([]);
   const [displayedOutcomes, setDisplayedOutcomes] = useState<Outcome[]>([]);
 
+  /**
+   * One roll of a uniformly distributed 6-sided die.
+   * Returns 1 to 6.
+   */
   function rollDice(): number {
     return Math.ceil(Math.random() * 6);
   }
 
-  function runSimulation(numDice: number): void {
+  /**
+   * A single trial in the monte carlo simulation.
+   * Stores outcome of each trial.
+   */
+  function runTrial(numDice: number): void {
     const rolls: number[] = [];
 
     for (let i = 0; i < numDice; i++) {
@@ -41,33 +55,63 @@ export function MonteCarlo() {
     });
   }
 
-  useEffect(() => {
-
-    if (!config) {
+  /**
+   * Starts loops to run monte carlo simulation and render progress.
+   */
+  function startSimulation() {
+    if (!config || running) {
       return;
     }
 
-    clearInterval(timeout.current!);
-    clearInterval(timeout2.current!);
+    setRunning(true);  // Disables form, while running
+    outcomes.current = [];  // Ensure no data from previous simulations
 
-    outcomes.current = [];  // Revert to default state
-
-    timeout.current = setInterval(() => {
-      setDisplayedOutcomes([...outcomes.current]);
-    }, 100);
-
+    // Runs Monte Carlo simulation.
     timeout2.current = setInterval(() => {
-      if (outcomes.current.length >= config.numIterations) {
-        console.log("Max iterations.")
-        clearInterval(timeout2.current!);
+      // Check if all iterations complete
+      if (outcomes.current.length >= config.numIterations - 1) {
+        console.log("Completed simulation!");
+        stopSimulation();
       }
-
-      runSimulation(config.numDie);
+      // Otherwise, run trial
+      runTrial(config.numDie);
     }, config.simulationDelay);
 
+    // Refreshes display 10 times per second (1000ms in a second / 100ms delay)
+    // This loop run indepedently of monte-carlo simulation loop above to avoid
+    // performance issues due to excessive re-rendering of components.
+    const REFRESH_DELAY = 100;
+    timeout.current = setInterval(() => {
+      setDisplayedOutcomes([...outcomes.current]);
+    }, REFRESH_DELAY);
+
+    console.log("Started simulation!");
+  }
+
+  /**
+   * Clears all loops, stopping the simulation.
+   */
+  function stopSimulation() {
+    clearInterval(timeout.current!);
+    clearInterval(timeout2.current!);
+    setRunning(false);
+    console.log("Stopped simulation!");
+  }
+
+  /**
+   * Runs whenever config is updated.
+   * Stars simulation if config provided, and no simulation currently running.
+   * Ensures simulation is stopped when component unmounted.
+   */
+  useEffect(() => {
+    if (!config || running) {
+      return;
+    }
+
+    startSimulation();
+
     return () => {
-      clearInterval(timeout.current!);
-      clearInterval(timeout2.current!);
+      stopSimulation();
     };
   }, [config]);
 
@@ -99,14 +143,17 @@ export function MonteCarlo() {
     <div className="flex flex-grow">
 
       {/* Config form */}
-      <form onSubmit={handleFormSubmit}
-        className="border border-dashed bg-white p-5 rounded max-w-[300px] flex flex-col gap-5">
+      <form
+        onSubmit={handleFormSubmit}
+        className="border border-dashed bg-white p-5 rounded max-w-[300px] flex flex-col gap-5"
+      >
         <label>
           <span>Number of die</span>
           <input
             type="number"
             name="input-num-die"
             placeholder="Enter a number"
+            disabled={running}
             required
           />
         </label>
@@ -117,6 +164,7 @@ export function MonteCarlo() {
             type="number"
             name="input-num-iterations"
             placeholder="Enter a number"
+            disabled={running}
             required
           />
         </label>
@@ -127,6 +175,7 @@ export function MonteCarlo() {
             type="number"
             name="input-simulation-rate"
             placeholder="Enter a number"
+            disabled={running}
             required
           />
         </label>
