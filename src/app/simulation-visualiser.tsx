@@ -31,8 +31,8 @@ export function SimulationVisualiser({ outcomes }: Props) {
   }, 0);
 
   return (
-    <div style={{ width: "100%", height: 500 }}>
-      <ResponsiveContainer width="100%" height="100%">
+    <div className="flex-grow flex flex-col">
+      <ResponsiveContainer width="100%" className="flex-grow">
         <BarChart data={frequencyData}>
           <XAxis dataKey="sum" />
           <YAxis label={{ value: "Percentage", angle: -90, position: "insideLeft" }} />
