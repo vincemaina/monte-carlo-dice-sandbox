@@ -77,10 +77,10 @@ export function MonteCarlo() {
       }
     }, config.simulationDelay);
 
-    // Refreshes display 10 times per second (1000ms in a second / 100ms delay)
+    // Refreshes display 29 times per second (1000ms in a second / 35ms delay)
     // This loop run indepedently of monte-carlo simulation loop above to avoid
     // performance issues due to excessive re-rendering of components.
-    const REFRESH_DELAY = 100;
+    const REFRESH_DELAY = 35;
     timeout.current = setInterval(() => {
       setDisplayedOutcomes([...outcomes.current]);
     }, REFRESH_DELAY);
