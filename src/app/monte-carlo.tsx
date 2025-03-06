@@ -184,7 +184,7 @@ export function MonteCarlo() {
             type="number"
             name="input-num-iterations"
             min={1}
-            defaultValue={1000}
+            defaultValue={5000}
             placeholder="Enter a number"
             disabled={running}
             required
