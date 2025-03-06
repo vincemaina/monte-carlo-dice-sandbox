@@ -3,12 +3,13 @@ import { useMemo } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
 interface Props {
-  outcomes: Outcome[]
+  outcomes: Outcome[],
+  numIterations: number
 }
 
 export type OutcomeProbabilities = { [value: number]: number }
 
-export function SimulationVisualiser({ outcomes }: Props) {
+export function SimulationVisualiser({ outcomes, numIterations }: Props) {
   // Compute frequency distribution
   const frequencyData = useMemo(() => {
     const counts: Record<number, number> = {};
@@ -32,6 +33,7 @@ export function SimulationVisualiser({ outcomes }: Props) {
 
   return (
     <div className="flex-grow flex flex-col">
+      <h2 className="font-black text-xl mb-10">Outcome Distribution</h2>
       <ResponsiveContainer width="100%" className="flex-grow">
         <BarChart data={frequencyData}>
           <XAxis dataKey="sum" />
@@ -41,8 +43,14 @@ export function SimulationVisualiser({ outcomes }: Props) {
         </BarChart>
       </ResponsiveContainer>
 
-      <div>Expected value: {expectedValue.toFixed(2)}</div>
-      <div>Number of simulations: {outcomes.length}</div>
+      <div className="flex-shrink-1">
+        <div>Expected value: {expectedValue.toFixed(2)}</div>
+        <div>Number of simulations: {outcomes.length}</div>
+        <div
+          className="bg-lime-500 w-full h-4 rounded mt-3"
+          style={{ maxWidth: `${(outcomes.length / numIterations) * 100}%` }}
+        />
+      </div>
     </div>
   );
 }
