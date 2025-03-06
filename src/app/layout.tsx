@@ -25,8 +25,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased p-10 max-w-[1500px] mx-auto min-h-screen flex flex-col`}
       >
+        <h1 className="font-black text-3xl mb-5">MONTE CARLO <span className="text-indigo-600">DICE SIMULATION</span></h1>
         {children}
       </body>
     </html>
