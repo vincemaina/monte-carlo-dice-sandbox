@@ -15,13 +15,13 @@ label {
 }
 
 label > span {
-  @apply font-medium;
+  @apply font-bold mb-1;
 }
 
 input {
-  @apply border border-dashed bg-white rounded px-1 py-0.5 w-full;
+  @apply border border-dashed bg-white rounded-xl px-2 py-0.5 w-full text-sm;
 }
 
 button, .button {
-  @apply bg-black text-white rounded p-2 px-3 cursor-pointer text-center;
+  @apply bg-black text-white rounded-full p-2 px-5 cursor-pointer text-center;
 }

@@ -162,7 +162,7 @@ export function MonteCarlo() {
       {/* Config form */}
       <form
         onSubmit={handleFormSubmit}
-        className="border border-dashed bg-white p-7 rounded flex lg:flex-col  items-center lg:items-start gap-5"
+        className="border border-dashed bg-white p-7 rounded-xl flex lg:flex-col  items-center lg:items-start gap-5"
       >
         <label>
           <span>Number of die</span>
@@ -219,7 +219,7 @@ export function MonteCarlo() {
       </form>
 
       {/* Visualiser */}
-      <div className="flex-grow border border-dashed bg-white rounded p-7 flex flex-col">
+      <div className="flex-grow border border-dashed bg-white rounded-xl p-7 flex flex-col">
         {
           config &&
           <SimulationVisualiser outcomes={displayedOutcomes} numIterations={config.numIterations} />
