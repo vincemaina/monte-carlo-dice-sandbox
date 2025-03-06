@@ -32,7 +32,6 @@ export function SimulationVisualiser({ outcomes }: Props) {
 
   return (
     <div style={{ width: "100%", height: 500 }}>
-      <h2 className="mb-10">Outcome Distribution</h2>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={frequencyData}>
           <XAxis dataKey="sum" />
