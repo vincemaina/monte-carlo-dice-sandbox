@@ -37,6 +37,6 @@ input {
   @apply border border-dashed bg-white rounded px-1 py-0.5;
 }
 
-button {
-  @apply bg-black text-white rounded p-2;
+button, .button {
+  @apply bg-black text-white rounded p-2 cursor-pointer text-center;
 }
