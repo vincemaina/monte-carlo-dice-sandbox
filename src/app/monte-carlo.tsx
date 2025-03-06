@@ -169,6 +169,8 @@ export function MonteCarlo() {
           <input
             type="number"
             name="input-num-die"
+            min={1}
+            max={1000}
             defaultValue={2}
             placeholder="Enter a number"
             disabled={running}
@@ -181,6 +183,7 @@ export function MonteCarlo() {
           <input
             type="number"
             name="input-num-iterations"
+            min={1}
             defaultValue={1000}
             placeholder="Enter a number"
             disabled={running}
@@ -194,6 +197,8 @@ export function MonteCarlo() {
             type="number"
             name="input-simulation-rate"
             defaultValue={10}
+            max={1000}
+            min={1}
             placeholder="Enter a number"
             disabled={running}
             required
