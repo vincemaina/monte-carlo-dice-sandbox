@@ -27,7 +27,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased p-10 max-w-[1500px] mx-auto min-h-screen flex flex-col`}
       >
-        <h1 className="font-black text-3xl mb-5">MONTE CARLO <span className="text-indigo-600">DICE SIMULATION</span></h1>
+        <div className="flex items-center justify-between mb-5">
+          <h1 className="font-black text-3xl">MONTE CARLO <span className="text-indigo-600">DICE SIMULATION</span></h1>
+          <a href="https://github.com/vincemaina/monte-carlo-dice-sandbox" target="_blank" className="button !rounded-full !px-4 text-sm">GitHub Repository</a>
+        </div>
         {children}
       </body>
     </html>
